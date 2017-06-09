@@ -25,21 +25,17 @@ app.use(freeMarkerMiddleware(__dirname + '/ftl'))
 ## options
 
 ```javascript
+freeMarkerMiddleware(__dirname + '/ftls')
+
+// OR:
+
 freeMarkerMiddleware({
-  // options...
+  root: __dirname + '/ftls',
+  ondir: function(dir, req, res, next) {
+    // ...
+  },
+  getdata: function(req) {
+    // ...
+  }
 })
 ```
-
-- root {String}
-- ondir {Function}
-
-  args:
-  - dir
-  - req
-  - res
-  - next
-
-- getdata {Function}
-
-  args:
-  - req

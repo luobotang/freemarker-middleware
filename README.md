@@ -1,5 +1,7 @@
 # freemarker-middleware
 
+[![NPM](https://nodei.co/npm/freemarker-middleware.png?compact=true)](https://nodei.co/npm/freemarker-middleware/)
+
 Express middleware to render FreeMarker template file(*.ftl).
 
 ## install

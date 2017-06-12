@@ -30,13 +30,16 @@ function middleware(options) {
 		var ftl = path.join(root, req.path)
 		fs.lstat(ftl, function(err, stats) {
 			if (err) {
-				next(err)
+				next()
+				return
+			}
+
+			if (stats.isDirectory()) {
+				ondir(ftl, req, res, next)
+			} else if (stats.isFile()) {
+				renderFile(ftl, req, res, next)
 			} else {
-				if (stats.isDirectory()) {
-					ondir(ftl, req, res, next)
-				} else if (stats.isFile()) {
-					renderFile(ftl, req, res, next)
-				}
+				next()
 			}
 		})
 	}

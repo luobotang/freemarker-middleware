@@ -6,6 +6,9 @@
   "devDependencies": {
     "express": "^4.15.3"
   },
+  "peerDependencies": {
+    "express": "^4.15.2"
+  },
   "scripts": {
     "test": "node test/server"
   },

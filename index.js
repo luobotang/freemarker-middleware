@@ -1,4 +1,3 @@
-var fs = require('fs')
 var path = require('path')
 var renderFtlTemplate = require('./lib/render')
 var getDirFiles = require('./lib/getDirFiles')
@@ -26,16 +25,18 @@ function middleware(options) {
 	var ondir = options.ondir || middleware.ondir
 	var getdata = options.getdata || middleware.getdata
 
+  var fs = options.fs = options.fs || require('fs')
+
 	return function middleware(req, res, next) {
 		var ftl = path.join(root, req.path)
-		fs.lstat(ftl, function(err, stats) {
+    fs.stat(ftl, function(err, stats) {
 			if (err) {
 				next()
 				return
 			}
 
 			if (stats.isDirectory()) {
-				ondir(ftl, req, res, next)
+				ondir(ftl, fs, req, res, next)
 			} else if (stats.isFile()) {
 				renderFile(ftl, req, res, next)
 			} else {
@@ -67,8 +68,8 @@ function middleware(options) {
 	}
 }
 
-middleware.ondir = function (dir, req, res, next) {
-	getDirFiles(dir, function(err, files) {
+middleware.ondir = function (dir, fs, req, res, next) {
+	getDirFiles(dir, fs, function(err, files) {
 		if (err) {
 			console.error(err)
 			next()
